@@ -22,9 +22,7 @@
     </script>
   </head>
   <body>
-    <a href="#main-content" class="skip-link sr-only"
-      >Aller au contenu principal</a
-    >
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
 
     <header role="banner">
       <div class="header-content">
@@ -50,12 +48,14 @@
     </header>
 
     <nav role="navigation" aria-label="Navigation principale">
-      <ul>
-        <li><a href="index.html">Accueil</a></li>
-        <li><a href="#">Courses</a></li>
-        <li><a href="#">Nos Lézards</a></li>
-        <li><a href="contact.html" aria-current="page">Contact</a></li>
-      </ul>
+      <div class="nav-content">
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="#">Courses</a></li>
+          <li><a href="#">Nos Lézards</a></li>
+          <li><a href="contact.html" aria-current="page">Contact</a></li>
+        </ul>
+      </div>
     </nav>
 
     <main id="main-content" role="main">
@@ -152,6 +152,31 @@
         </form>
       </div>
     </main>
+
+    <footer role="contentinfo">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>À propos</h3>
+          <p>
+            La Course de Lézards est le premier site français dédié aux courses
+            de lézards professionnelles.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h3>Liens rapides</h3>
+          <ul>
+            <li><a href="#">Règlement</a></li>
+            <li><a href="#">Inscription</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>Email: contact@coursedelezards.fr</p>
+          <p>Tél: 01 23 45 67 89</p>
+        </div>
+      </div>
+    </footer>
 
     <script>
       // Sauvegarder les préférences de l'utilisateur
