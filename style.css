@@ -8,6 +8,8 @@
   --error-color: #d32f2f; /* Rouge plus foncé */
   --success-color: #388e3c; /* Vert moyen plus foncé */
   --focus-color: #1976d2; /* Bleu plus foncé */
+  --high-contrast-background: #000000; /* Fond noir pour contraste élevé */
+  --high-contrast-text: #ffffff; /* Texte blanc pour contraste élevé */
 }
 
 /* Reset et styles de base */
@@ -90,6 +92,7 @@ nav ul {
   display: flex;
   gap: 2rem;
   flex-wrap: wrap;
+  align-items: center; /* Ajouté pour aligner les éléments verticalement */
 }
 
 nav a {
@@ -410,6 +413,61 @@ legend {
   border-radius: 4px;
   margin-bottom: 1rem;
   display: none;
+}
+
+/* High contrast mode */
+.high-contrast {
+  background-color: var(--high-contrast-background) !important;
+  color: var(--high-contrast-text) !important;
+}
+
+.high-contrast header,
+.high-contrast nav,
+.high-contrast footer {
+  background-color: var(--high-contrast-background) !important;
+  color: var(--high-contrast-text) !important;
+}
+
+.high-contrast a {
+  color: var(--high-contrast-text) !important;
+}
+
+.high-contrast .btn,
+.high-contrast .btn-submit,
+.high-contrast .search-form button {
+  background-color: var(--high-contrast-background) !important;
+  color: var(--high-contrast-text) !important;
+  border: 2px solid var(--high-contrast-text) !important;
+}
+
+.high-contrast .card {
+  background-color: var(--high-contrast-background) !important;
+  color: var(--high-contrast-text) !important;
+  border: 2px solid var(--high-contrast-text) !important;
+}
+
+.high-contrast .preferences-form,
+.high-contrast .form-container,
+.high-contrast fieldset {
+  background-color: var(--high-contrast-background) !important;
+  color: var(--high-contrast-text) !important;
+  border: 2px solid var(--high-contrast-text) !important;
+}
+
+.contrast-toggle-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-left: 1rem;
+}
+
+.contrast-toggle-btn:hover,
+.contrast-toggle-btn:focus {
+  background-color: var(--secondary-color);
 }
 
 /* Responsive design */

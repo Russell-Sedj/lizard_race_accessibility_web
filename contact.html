@@ -11,14 +11,26 @@
       function applyUserPreferences() {
         const root = document.documentElement;
         const userFontFamily = localStorage.getItem("font-family");
+        const highContrast = localStorage.getItem("high-contrast");
 
         if (userFontFamily) {
           document.body.style.fontFamily = userFontFamily;
+        }
+
+        if (highContrast === "true") {
+          document.body.classList.add("high-contrast");
         }
       }
 
       // Appliquer les préférences au chargement de la page
       document.addEventListener("DOMContentLoaded", applyUserPreferences);
+
+      // Fonction pour basculer le mode de contraste élevé
+      function toggleHighContrast() {
+        const body = document.body;
+        const isHighContrast = body.classList.toggle("high-contrast");
+        localStorage.setItem("high-contrast", isHighContrast);
+      }
     </script>
   </head>
   <body>
@@ -57,6 +69,15 @@
           <li><a href="#">Courses</a></li>
           <li><a href="#">Nos Lézards</a></li>
           <li><a href="contact.html" aria-current="page">Contact</a></li>
+          <li>
+            <button
+              onclick="toggleHighContrast()"
+              aria-label="Activer/désactiver le contraste élevé"
+              class="contrast-toggle-btn"
+            >
+              Contraste élevé
+            </button>
+          </li>
         </ul>
       </div>
     </nav>
