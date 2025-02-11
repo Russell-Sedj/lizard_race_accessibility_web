@@ -470,6 +470,18 @@ legend {
   background-color: var(--secondary-color);
 }
 
+.header-content h1 {
+  color: white; /* Assurez-vous que le texte est blanc pour être visible sur le fond vert */
+  font-size: 2rem;
+  margin: 0;
+}
+
+.high-contrast .header-content h1 {
+  color: var(
+    --high-contrast-text
+  ); /* Assurez-vous que le texte est blanc pour le mode contraste élevé */
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   nav ul {
