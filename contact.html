@@ -109,8 +109,14 @@
               required
               aria-required="true"
               aria-describedby="nom-error"
+              aria-invalid="false"
             />
-            <div id="nom-error" class="error-message" role="alert"></div>
+            <div
+              id="nom-error"
+              class="error-message"
+              role="alert"
+              aria-live="assertive"
+            ></div>
           </div>
 
           <div class="form-group">
@@ -122,8 +128,14 @@
               required
               aria-required="true"
               aria-describedby="prenom-error"
+              aria-invalid="false"
             />
-            <div id="prenom-error" class="error-message" role="alert"></div>
+            <div
+              id="prenom-error"
+              class="error-message"
+              role="alert"
+              aria-live="assertive"
+            ></div>
           </div>
 
           <fieldset>
@@ -141,9 +153,18 @@
                 id="code_postal"
                 name="code_postal"
                 pattern="[0-9]{5}"
-                aria-describedby="cp-error"
+                aria-describedby="cp-error cp-help"
+                aria-invalid="false"
               />
-              <div id="cp-error" class="error-message" role="alert"></div>
+              <div
+                id="cp-error"
+                class="error-message"
+                role="alert"
+                aria-live="assertive"
+              ></div>
+              <div id="cp-help" class="help-message">
+                Le code postal doit contenir 5 chiffres.
+              </div>
             </div>
 
             <div class="form-group">
@@ -160,11 +181,23 @@
               name="telephone"
               pattern="[0-9]{10}"
               aria-describedby="tel-error"
+              aria-invalid="false"
             />
-            <div id="tel-error" class="error-message" role="alert"></div>
+            <div
+              id="tel-error"
+              class="error-message"
+              role="alert"
+              aria-live="assertive"
+            ></div>
           </div>
 
-          <button type="submit" class="btn-submit">Envoyer</button>
+          <button
+            type="submit"
+            class="btn-submit"
+            aria-label="Envoyer le formulaire"
+          >
+            Envoyer
+          </button>
         </form>
       </div>
 
@@ -202,7 +235,6 @@
             <li>
               <a href="accessibility.html">Déclaration d'accessibilité</a>
             </li>
-            <!-- Ajouté -->
           </ul>
         </div>
         <div class="footer-section">
@@ -292,11 +324,15 @@
       form.addEventListener("submit", (e) => {
         e.preventDefault();
         let isValid = true;
+        let firstInvalidField = null;
 
         // Valider tous les champs requis
         requiredFields.forEach((field) => {
           if (!validateField(field)) {
             isValid = false;
+            if (!firstInvalidField) {
+              firstInvalidField = field;
+            }
           }
         });
 
@@ -310,6 +346,8 @@
           setTimeout(() => {
             window.location.href = "index.html";
           }, 2000);
+        } else if (firstInvalidField) {
+          firstInvalidField.focus();
         }
       });
 
