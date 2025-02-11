@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Déclaration d'accessibilité</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+    <header role="banner">
+      <div class="header-content">
+        <div class="logo-container">
+          <img src="logo.jpg" alt="Logo Course de Lézards" class="logo" />
+          <h1 class="site-title">Course de Lézards</h1>
+        </div>
+        <form
+          role="search"
+          aria-label="Recherche sur le site"
+          class="search-form"
+          autocomplete="on"
+        >
+          <input
+            type="search"
+            id="search"
+            name="search"
+            placeholder="Rechercher..."
+            aria-label="Rechercher sur le site"
+          />
+          <button type="submit" aria-label="Rechercher sur le site">
+            Rechercher
+          </button>
+        </form>
+      </div>
+    </header>
+
+    <nav role="navigation" aria-label="Navigation principale">
+      <div class="nav-content">
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="#">Courses</a></li>
+          <li><a href="#">Nos Lézards</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li>
+            <button
+              onclick="toggleHighContrast()"
+              aria-label="Activer/désactiver le contraste élevé"
+              class="contrast-toggle-btn"
+            >
+              Contraste élevé
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main id="main-content" role="main">
+      <section aria-labelledby="accessibility-title" role="region">
+        <h2 id="accessibility-title">Déclaration d'accessibilité</h2>
+        <p>
+          Nous nous engageons à rendre notre site web accessible à tous, y
+          compris aux personnes en situation de handicap. Cette déclaration
+          d'accessibilité décrit les mesures que nous avons prises pour
+          améliorer l'accessibilité de notre site.
+        </p>
+        <h3>Conformité aux normes</h3>
+        <p>
+          Notre site web est conçu pour être conforme aux directives pour
+          l'accessibilité des contenus Web (WCAG) 2.1 niveau AA. Nous avons
+          effectué des tests pour nous assurer que notre site est accessible et
+          utilisable par tous.
+        </p>
+        <h3>Fonctionnalités d'accessibilité</h3>
+        <ul>
+          <li>
+            Navigation au clavier : Vous pouvez naviguer sur notre site en
+            utilisant uniquement le clavier.
+          </li>
+          <li>
+            Contraste élevé : Un mode de contraste élevé est disponible pour
+            améliorer la lisibilité.
+          </li>
+          <li>
+            Descriptions alternatives : Toutes les images ont des descriptions
+            alternatives pour les lecteurs d'écran.
+          </li>
+        </ul>
+        <h3>Retour d'information</h3>
+        <p>
+          Si vous rencontrez des difficultés pour accéder à notre site ou si
+          vous avez des suggestions pour améliorer l'accessibilité, veuillez
+          nous contacter à l'adresse suivante :
+          <a href="mailto:contact@coursedelezards.fr"
+            >contact@coursedelezards.fr</a
+          >.
+        </p>
+      </section>
+    </main>
+
+    <footer role="contentinfo">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>À propos</h3>
+          <p>
+            La Course de Lézards est le premier site français dédié aux courses
+            de lézards professionnelles.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h3>Liens rapides</h3>
+          <ul>
+            <li><a href="#">Règlement</a></li>
+            <li><a href="#">Inscription</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li>
+              <a href="accessibility.html">Déclaration d'accessibilité</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>Email: contact@coursedelezards.fr</p>
+          <p>Tél: 01 23 45 67 89</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Fonction pour appliquer les préférences de l'utilisateur
+      function applyUserPreferences() {
+        const root = document.documentElement;
+        const userFontFamily = localStorage.getItem("font-family");
+        const highContrast = localStorage.getItem("high-contrast");
+
+        if (userFontFamily) {
+          document.body.style.fontFamily = userFontFamily;
+        }
+
+        if (highContrast === "true") {
+          document.body.classList.add("high-contrast");
+        }
+      }
+
+      // Appliquer les préférences au chargement de la page
+      document.addEventListener("DOMContentLoaded", applyUserPreferences);
+
+      // Fonction pour basculer le mode de contraste élevé
+      function toggleHighContrast() {
+        const body = document.body;
+        const isHighContrast = body.classList.toggle("high-contrast");
+        localStorage.setItem("high-contrast", isHighContrast);
+      }
+    </script>
+  </body>
+</html>
