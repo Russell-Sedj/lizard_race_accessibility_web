@@ -454,6 +454,19 @@ legend {
   border: 2px solid var(--high-contrast-text) !important;
 }
 
+.high-contrast .breadcrumb {
+  background-color: var(--high-contrast-background) !important;
+  color: var(--high-contrast-text) !important;
+}
+
+.high-contrast .breadcrumb-item a {
+  color: var(--high-contrast-text) !important;
+}
+
+.high-contrast .breadcrumb-item.active {
+  color: var(--high-contrast-text) !important;
+}
+
 .contrast-toggle-btn {
   background-color: var(--primary-color);
   color: white;
