@@ -40,8 +40,11 @@
             id="search"
             name="search"
             placeholder="Rechercher..."
+            aria-label="Rechercher sur le site"
           />
-          <button type="submit">Rechercher</button>
+          <button type="submit" aria-label="Rechercher sur le site">
+            Rechercher
+          </button>
         </form>
       </div>
     </header>
@@ -58,7 +61,7 @@
     </nav>
 
     <main id="main-content" role="main">
-      <section class="hero" aria-labelledby="hero-title">
+      <section class="hero" aria-labelledby="hero-title" role="region">
         <img src="lzrun.jpg" alt="Course de lézards en action" />
         <div class="hero-content">
           <h2 id="hero-title">
@@ -68,7 +71,7 @@
         </div>
       </section>
 
-      <section aria-labelledby="events-title">
+      <section aria-labelledby="events-title" role="region">
         <h2 id="events-title">Prochains événements</h2>
         <div class="cards-grid">
           <article class="card">
