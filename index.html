@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course de Lézards - Accueil</title>
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      // Fonction pour appliquer les préférences de l'utilisateur
+      function applyUserPreferences() {
+        const root = document.documentElement;
+        const userFontFamily = localStorage.getItem("font-family");
+
+        if (userFontFamily) {
+          document.body.style.fontFamily = userFontFamily;
+        }
+      }
+
+      // Appliquer les préférences au chargement de la page
+      document.addEventListener("DOMContentLoaded", applyUserPreferences);
+    </script>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+    <header role="banner">
+      <div class="header-content">
+        <div class="logo-container">
+          <img src="logo.jpg" alt="Logo Course de Lézards" class="logo" />
+          <h1>Course de Lézards</h1>
+        </div>
+        <form
+          role="search"
+          aria-label="Recherche sur le site"
+          class="search-form"
+          autocomplete="on"
+        >
+          <input
+            type="search"
+            id="search"
+            name="search"
+            placeholder="Rechercher..."
+          />
+          <button type="submit">Rechercher</button>
+        </form>
+      </div>
+    </header>
+
+    <nav role="navigation" aria-label="Navigation principale">
+      <div class="nav-content">
+        <ul>
+          <li><a href="index.html" aria-current="page">Accueil</a></li>
+          <li><a href="#">Courses</a></li>
+          <li><a href="#">Nos Lézards</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main id="main-content" role="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <img src="lzrun.jpg" alt="Course de lézards en action" />
+        <div class="hero-content">
+          <h2 id="hero-title">
+            Bienvenue dans l'univers passionnant des courses de lézards
+          </h2>
+          <p>Découvrez le sport le plus excitant du monde reptilien !</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="events-title">
+        <h2 id="events-title">Prochains événements</h2>
+        <div class="cards-grid">
+          <article class="card">
+            <img src="lz1.png" alt="Lezard perché sur un arbre" />
+            <h3>Grand Prix des Geckos</h3>
+            <p>
+              Le plus prestigieux événement de l'année avec les meilleurs
+              coureurs !
+            </p>
+            <a href="#" class="btn"
+              >En savoir plus sur le Grand Prix des Geckos</a
+            >
+          </article>
+          <article class="card">
+            <img src="lz2.jpg" alt="Lezard qui veut sauter" />
+            <h3>Challenge des Débutants</h3>
+            <p>
+              Une compétition parfaite pour débuter dans le monde des courses.
+            </p>
+            <a href="#" class="btn"
+              >En savoir plus sur le Challenge des Débutants</a
+            >
+          </article>
+          <article class="card">
+            <img src="lz3.jpg" alt="Lezard qui marche sur l'eau" />
+            <h3>Coupe des Champions</h3>
+            <p>Les champions s'affrontent dans une course légendaire !</p>
+            <a href="#" class="btn"
+              >En savoir plus sur la Coupe des Champions</a
+            >
+          </article>
+        </div>
+      </section>
+
+      <div class="preferences-form">
+        <h2>Personnaliser l'apparence</h2>
+        <form id="preferences-form">
+          <label for="font-family">Police :</label>
+          <select id="font-family" name="font-family">
+            <option value="system-ui">System UI</option>
+            <option value="Arial">Arial</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Tahoma">Tahoma</option>
+          </select>
+
+          <button type="submit">Appliquer</button>
+        </form>
+      </div>
+    </main>
+
+    <footer role="contentinfo">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>À propos</h3>
+          <p>
+            La Course de Lézards est le premier site français dédié aux courses
+            de lézards professionnelles.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h3>Liens rapides</h3>
+          <ul>
+            <li><a href="#">Règlement</a></li>
+            <li><a href="#">Inscription</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact</h3>
+          <p>Email: contact@coursedelezards.fr</p>
+          <p>Tél: 01 23 45 67 89</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Sauvegarder les préférences de l'utilisateur
+      document
+        .getElementById("preferences-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const fontFamily = document.getElementById("font-family").value;
+
+          localStorage.setItem("font-family", fontFamily);
+
+          applyUserPreferences();
+        });
+
+      // Animation smooth scroll
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      });
+
+      // Annonce des événements pour les lecteurs d'écran
+      const announceToScreenReader = (message) => {
+        const announcement = document.createElement("div");
+        announcement.setAttribute("role", "status");
+        announcement.setAttribute("aria-live", "polite");
+        announcement.className = "sr-only";
+        announcement.textContent = message;
+        document.body.appendChild(announcement);
+        setTimeout(() => {
+          document.body.removeChild(announcement);
+        }, 1000);
+      };
+
+      // Animation des cartes au scroll
+      const observeCards = () => {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.style.opacity = "1";
+              entry.target.style.transform = "translateY(0)";
+            }
+          });
+        });
+
+        document.querySelectorAll(".card").forEach((card) => {
+          observer.observe(card);
+        });
+      };
+
+      observeCards();
+    </script>
+  </body>
+</html>

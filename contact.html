@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course de Lézards - Contact</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <script>
+      // Fonction pour appliquer les préférences de l'utilisateur
+      function applyUserPreferences() {
+        const root = document.documentElement;
+        const userFontFamily = localStorage.getItem("font-family");
+
+        if (userFontFamily) {
+          document.body.style.fontFamily = userFontFamily;
+        }
+      }
+
+      // Appliquer les préférences au chargement de la page
+      document.addEventListener("DOMContentLoaded", applyUserPreferences);
+    </script>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link sr-only"
+      >Aller au contenu principal</a
+    >
+
+    <header role="banner">
+      <div class="header-content">
+        <div class="logo-container">
+          <img src="logo.jpg" alt="Logo Course de Lézards" class="logo" />
+          <h1>Course de Lézards</h1>
+        </div>
+        <form
+          role="search"
+          aria-label="Recherche sur le site"
+          class="search-form"
+          autocomplete="on"
+        >
+          <input
+            type="search"
+            id="search"
+            name="search"
+            placeholder="Rechercher..."
+          />
+          <button type="submit">Rechercher</button>
+        </form>
+      </div>
+    </header>
+
+    <nav role="navigation" aria-label="Navigation principale">
+      <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="#">Courses</a></li>
+        <li><a href="#">Nos Lézards</a></li>
+        <li><a href="contact.html" aria-current="page">Contact</a></li>
+      </ul>
+    </nav>
+
+    <main id="main-content" role="main">
+      <div class="form-container">
+        <h1>Contactez-nous</h1>
+        <div
+          id="success-message"
+          class="success-message"
+          role="alert"
+          aria-live="polite"
+        ></div>
+
+        <form id="contact-form" novalidate>
+          <div class="form-group">
+            <label for="nom" class="required">Nom</label>
+            <input
+              type="text"
+              id="nom"
+              name="nom"
+              required
+              aria-required="true"
+              aria-describedby="nom-error"
+            />
+            <div id="nom-error" class="error-message" role="alert"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="prenom" class="required">Prénom</label>
+            <input
+              type="text"
+              id="prenom"
+              name="prenom"
+              required
+              aria-required="true"
+              aria-describedby="prenom-error"
+            />
+            <div id="prenom-error" class="error-message" role="alert"></div>
+          </div>
+
+          <fieldset>
+            <legend>Adresse</legend>
+
+            <div class="form-group">
+              <label for="rue">Numéro et rue</label>
+              <input type="text" id="rue" name="rue" />
+            </div>
+
+            <div class="form-group">
+              <label for="code_postal">Code postal</label>
+              <input
+                type="text"
+                id="code_postal"
+                name="code_postal"
+                pattern="[0-9]{5}"
+                aria-describedby="cp-error"
+              />
+              <div id="cp-error" class="error-message" role="alert"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="ville">Ville</label>
+              <input type="text" id="ville" name="ville" />
+            </div>
+          </fieldset>
+
+          <div class="form-group">
+            <label for="telephone">Téléphone</label>
+            <input
+              type="tel"
+              id="telephone"
+              name="telephone"
+              pattern="[0-9]{10}"
+              aria-describedby="tel-error"
+            />
+            <div id="tel-error" class="error-message" role="alert"></div>
+          </div>
+
+          <button type="submit" class="btn-submit">Envoyer</button>
+        </form>
+      </div>
+
+      <div class="preferences-form">
+        <h2>Personnaliser l'apparence</h2>
+        <form id="preferences-form">
+          <label for="font-family">Police :</label>
+          <select id="font-family" name="font-family">
+            <option value="system-ui">System UI</option>
+            <option value="Arial">Arial</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Tahoma">Tahoma</option>
+          </select>
+
+          <button type="submit">Appliquer</button>
+        </form>
+      </div>
+    </main>
+
+    <script>
+      // Sauvegarder les préférences de l'utilisateur
+      document
+        .getElementById("preferences-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const fontFamily = document.getElementById("font-family").value;
+
+          localStorage.setItem("font-family", fontFamily);
+
+          applyUserPreferences();
+        });
+
+      // Validation en temps réel
+      const form = document.getElementById("contact-form");
+      const requiredFields = form.querySelectorAll("[required]");
+
+      // Validation à la saisie
+      requiredFields.forEach((field) => {
+        field.addEventListener("input", () => {
+          validateField(field);
+        });
+
+        field.addEventListener("blur", () => {
+          validateField(field);
+        });
+      });
+
+      // Validation des champs
+      function validateField(field) {
+        const errorDiv = document.getElementById(`${field.id}-error`);
+
+        if (!field.value.trim()) {
+          showError(field, errorDiv, "Ce champ est obligatoire");
+          return false;
+        }
+
+        // Validation spécifique par type
+        switch (field.id) {
+          case "code_postal":
+            if (!/^[0-9]{5}$/.test(field.value)) {
+              showError(
+                field,
+                errorDiv,
+                "Le code postal doit contenir 5 chiffres"
+              );
+              return false;
+            }
+            break;
+          case "telephone":
+            if (field.value && !/^[0-9]{10}$/.test(field.value)) {
+              showError(field, errorDiv, "Le numéro doit contenir 10 chiffres");
+              return false;
+            }
+            break;
+        }
+
+        hideError(field, errorDiv);
+        return true;
+      }
+
+      function showError(field, errorDiv, message) {
+        field.classList.add("error");
+        field.setAttribute("aria-invalid", "true");
+        errorDiv.textContent = message;
+        errorDiv.classList.add("visible");
+      }
+
+      function hideError(field, errorDiv) {
+        field.classList.remove("error");
+        field.setAttribute("aria-invalid", "false");
+        errorDiv.textContent = "";
+        errorDiv.classList.remove("visible");
+      }
+
+      // Soumission du formulaire
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let isValid = true;
+
+        // Valider tous les champs requis
+        requiredFields.forEach((field) => {
+          if (!validateField(field)) {
+            isValid = false;
+          }
+        });
+
+        if (isValid) {
+          // Simuler l'envoi
+          const successMessage = document.getElementById("success-message");
+          successMessage.style.display = "block";
+          successMessage.textContent = "Formulaire envoyé avec succès !";
+
+          // Redirection après 2 secondes
+          setTimeout(() => {
+            window.location.href = "index.html";
+          }, 2000);
+        }
+      });
+
+      // Gestion de l'accessibilité du focus
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Tab") {
+          document.body.classList.add("using-keyboard");
+        }
+      });
+
+      document.addEventListener("mousedown", () => {
+        document.body.classList.remove("using-keyboard");
+      });
+    </script>
+  </body>
+</html>
