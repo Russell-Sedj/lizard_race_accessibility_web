@@ -180,7 +180,7 @@
               id="telephone"
               name="telephone"
               pattern="[0-9]{10}"
-              aria-describedby="tel-error"
+              aria-describedby="tel-error tel-help"
               aria-invalid="false"
             />
             <div
@@ -189,6 +189,9 @@
               role="alert"
               aria-live="assertive"
             ></div>
+            <div id="tel-help" class="help-message">
+              Le numéro de téléphone doit contenir 10 chiffres.
+            </div>
           </div>
 
           <button
@@ -199,6 +202,31 @@
             Envoyer
           </button>
         </form>
+
+        <!-- Modale de confirmation -->
+        <div
+          id="confirmation-modal"
+          class="modal"
+          role="dialog"
+          aria-labelledby="confirmation-title"
+          aria-modal="true"
+          hidden
+        >
+          <div class="modal-content">
+            <h2 id="confirmation-title">Confirmation des informations</h2>
+            <div id="confirmation-content" class="confirmation-content">
+              <!-- Le contenu sera rempli dynamiquement -->
+            </div>
+            <div class="modal-buttons">
+              <button type="button" class="btn-submit" id="confirm-submit">
+                Confirmer l'envoi
+              </button>
+              <button type="button" class="btn-secondary" id="edit-form">
+                Modifier les informations
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="preferences-form">
@@ -252,9 +280,7 @@
         .addEventListener("submit", function (e) {
           e.preventDefault();
           const fontFamily = document.getElementById("font-family").value;
-
           localStorage.setItem("font-family", fontFamily);
-
           applyUserPreferences();
         });
 
@@ -320,6 +346,61 @@
         errorDiv.classList.remove("visible");
       }
 
+      function showConfirmation() {
+        const modal = document.getElementById("confirmation-modal");
+        const confirmationContent = document.getElementById(
+          "confirmation-content"
+        );
+        const formData = new FormData(form);
+
+        let content = "<dl>";
+        const labels = {
+          nom: "Nom",
+          prenom: "Prénom",
+          rue: "Numéro et rue",
+          code_postal: "Code postal",
+          ville: "Ville",
+          telephone: "Téléphone",
+        };
+
+        for (const [key, value] of formData.entries()) {
+          if (value) {
+            content += `
+              <dt>${labels[key] || key}</dt>
+              <dd>${value}</dd>
+            `;
+          }
+        }
+        content += "</dl>";
+
+        confirmationContent.innerHTML = content;
+        modal.hidden = false;
+
+        // Gérer le focus
+        const confirmBtn = document.getElementById("confirm-submit");
+        confirmBtn.focus();
+      }
+
+      function closeModal() {
+        const modal = document.getElementById("confirmation-modal");
+        modal.hidden = true;
+        document.querySelector(".btn-submit").focus();
+      }
+
+      function submitForm() {
+        const successMessage = document.getElementById("success-message");
+        successMessage.style.display = "block";
+        successMessage.textContent = "Formulaire envoyé avec succès !";
+
+        // Annoncer le succès aux lecteurs d'écran
+        successMessage.setAttribute("role", "alert");
+
+        // Redirection après 2 secondes
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 2000);
+      }
+
       // Soumission du formulaire
       form.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -337,17 +418,27 @@
         });
 
         if (isValid) {
-          // Simuler l'envoi
-          const successMessage = document.getElementById("success-message");
-          successMessage.style.display = "block";
-          successMessage.textContent = "Formulaire envoyé avec succès !";
-
-          // Redirection après 2 secondes
-          setTimeout(() => {
-            window.location.href = "index.html";
-          }, 2000);
+          showConfirmation();
         } else if (firstInvalidField) {
           firstInvalidField.focus();
+        }
+      });
+
+      // Gestion des événements de la modale
+      document
+        .getElementById("confirm-submit")
+        .addEventListener("click", submitForm);
+      document
+        .getElementById("edit-form")
+        .addEventListener("click", closeModal);
+
+      // Gestion de la touche Échap pour la modale
+      document.addEventListener("keydown", (e) => {
+        if (
+          e.key === "Escape" &&
+          !document.getElementById("confirmation-modal").hidden
+        ) {
+          closeModal();
         }
       });
 
