@@ -153,6 +153,8 @@
                 id="code_postal"
                 name="code_postal"
                 pattern="[0-9]{5}"
+                inputmode="numeric"
+                maxlength="5"
                 aria-describedby="cp-error cp-help"
                 aria-invalid="false"
               />
@@ -163,7 +165,7 @@
                 aria-live="assertive"
               ></div>
               <div id="cp-help" class="help-message">
-                Le code postal doit contenir 5 chiffres.
+                Le code postal doit contenir 5 chiffres (ex: 75001).
               </div>
             </div>
 
@@ -180,6 +182,8 @@
               id="telephone"
               name="telephone"
               pattern="[0-9]{10}"
+              inputmode="numeric"
+              maxlength="10"
               aria-describedby="tel-error tel-help"
               aria-invalid="false"
             />
@@ -190,7 +194,8 @@
               aria-live="assertive"
             ></div>
             <div id="tel-help" class="help-message">
-              Le numéro de téléphone doit contenir 10 chiffres.
+              Le numéro de téléphone doit contenir 10 chiffres sans espaces (ex:
+              0123456789)
             </div>
           </div>
 
@@ -274,6 +279,19 @@
     </footer>
 
     <script>
+      // Empêcher la saisie de caractères non numériques
+      document
+        .getElementById("code_postal")
+        .addEventListener("input", function (e) {
+          this.value = this.value.replace(/[^0-9]/g, "");
+        });
+
+      document
+        .getElementById("telephone")
+        .addEventListener("input", function (e) {
+          this.value = this.value.replace(/[^0-9]/g, "");
+        });
+
       // Sauvegarder les préférences de l'utilisateur
       document
         .getElementById("preferences-form")
